@@ -27,5 +27,6 @@ jobs:
           timoni mod push ./timoni \
             oci://ghcr.io/${{ github.repository_owner }}/modules/home \
             --version ${{ github.ref_name }} \
+            --latest ${{ github.ref == 'refs/heads/main' }} \
             --creds ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
 
