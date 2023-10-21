@@ -1,8 +1,7 @@
 name: Release module
 on:
   push:
-    branches:
-      - refs/tags/*
+    tag: ['*']
 
 
 permissions:
