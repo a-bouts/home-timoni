@@ -1,11 +1,10 @@
-name: Release module
+name: Test Module
 on:
   push:
-    tag: ['*'] # semver format
+    branch: ['*']
 
 permissions:
   contents: read # needed for checkout
-  packages: write # needed for GHCR access
 
 jobs:
   push:
@@ -21,10 +20,3 @@ jobs:
       - name: Test instance build
         run: |
           timoni build -n testing test ./timoni
-      - name: Push
-        run: |
-          timoni mod push ./timoni \
-            oci://ghcr.io/${{ github.repository_owner }}/modules/home
-            --version ${{ github.ref_name }} \
-            --creds ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
-
