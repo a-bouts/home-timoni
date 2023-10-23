@@ -42,6 +42,7 @@ values: {
 	}
 	units: {
 		"flux-system": {
+			enabled: true
 			repo: "home"
 			kustomization_spec: {
 				path: "./kustomize-units/flux-system/base"
@@ -52,6 +53,7 @@ values: {
 			}
 		}
 		"cert-manager": {
+			enabled: true
 			helm_repo_url: "https://charts.jetstack.io"
 			helmrelease_spec: {
 				chart: {

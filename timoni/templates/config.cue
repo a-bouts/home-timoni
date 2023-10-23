@@ -39,7 +39,7 @@ import (
 }
 
 #UnitConfig: {
-	enabled: bool
+	enabled: bool | *false
 	repo: string
 	helm_repo_url?: string
 	labels: [string]: string
@@ -57,7 +57,7 @@ import (
 	git_repositories: objects: [ for name, source in config.sources if source.kind == "GitRepository" { #GitRepository & {_name: name, _namespace: config.metadata.namespace, _default: config.git_repo_spec_default, _config: source}} ]
 	oci_repositories: objects: [ for name, source in config.sources if source.kind == "OCIRepository" { #OCIRepository & {_name: name, _namespace: config.metadata.namespace, _default: config.oci_repo_spec_default, _config: source}} ]
 
-	units: objects: [ for name, unit in config.units { #Unit & {
+	units: objects: [ for name, unit in config.units if unit.enabled { #Unit & {
 		_sources: config.sources
 		_name: name
 		_namespace: config.metadata.namespace
