@@ -68,14 +68,14 @@ import (
 				target: kind: "HelmRelease"
 				patch: """
 				- op: replace
-					path: /metadata
-					value:
-					namespace: default
-					name: \( _name )
-					labels: \( yaml.Marshal(_labels) )
+				  path: /metadata
+				  value:
+				    namespace: default
+				    name: \( _name )
+				    labels: \( yaml.Marshal(_labels) )
 				- op: replace
-					path: /spec
-					value: \( yaml.Marshal(_helmrelease_spec) )
+				  path: /spec
+				  value: \( yaml.Marshal(_helmrelease_spec) )
 				"""
 			}
 		}
