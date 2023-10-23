@@ -40,7 +40,7 @@ import (
 
 #UnitConfig: {
 	enabled: bool | *false
-	repo: string
+	repo?: string
 	helm_repo_url?: string
 	labels: [string]: string
 	ref_override?: [string]: string

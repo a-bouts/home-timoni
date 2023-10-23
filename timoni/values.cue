@@ -38,6 +38,7 @@ values: {
 			kind: "GitRepository"
 			name: "home"
 		}
+		targetNamespace: "flux-system"
 		wait: true
 	}
 	units: {
