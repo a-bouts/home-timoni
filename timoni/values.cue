@@ -68,5 +68,16 @@ values: {
 				values: installCRDs: true
 			}
 		}
+		"cert-manager-letsencrypt": {
+			enabled: units["cert-manager"].enabled
+			repo: "home"
+			kustomization_spec: {
+                                path: "./kustomize-units/cert-manager/letsencrypt"
+                                targetNamespace: "cert-manager-system"
+				postBuild:
+					substitute:
+						email: "to-be-defined"
+                        }
+		}
 	}
 }
