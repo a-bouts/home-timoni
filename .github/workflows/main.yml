@@ -1,0 +1,41 @@
+name: Release module
+on:
+  push:
+    tags: ['v*']
+
+
+permissions:
+  contents: read # needed for checkout
+  packages: write # needed for GHCR access
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Timoni
+        uses: stefanprodan/timoni/actions/setup@main
+      - name: Lint
+        run: |
+          timoni mod lint ./timoni
+      - name: Test instance build
+        run: |
+          timoni build -n testing test ./timoni
+      - name: Set Version
+        id: version
+        uses: actions/github-script@v6
+        with:
+          script: |
+            tag = context.ref.substring(10)
+            if (tag.charAt(0) === 'v')
+              tag = tag.substring(1)
+            return tag
+      - name: Push
+        run: |
+          timoni mod push ./timoni \
+            oci://ghcr.io/${{ github.repository_owner }}/modules/home \
+            --version ${{ steps.version.outputs.result }} \
+            --latest ${{ github.ref == 'refs/heads/main' }} \
+            --creds ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
+

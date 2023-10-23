@@ -38,10 +38,12 @@ values: {
 			kind: "GitRepository"
 			name: "home"
 		}
+		targetNamespace: "flux-system"
 		wait: true
 	}
 	units: {
 		"flux-system": {
+			enabled: true
 			repo: "home"
 			kustomization_spec: {
 				path: "./kustomize-units/flux-system/base"
@@ -52,6 +54,7 @@ values: {
 			}
 		}
 		"cert-manager": {
+			enabled: true
 			helm_repo_url: "https://charts.jetstack.io"
 			helmrelease_spec: {
 				chart: {
@@ -64,6 +67,17 @@ values: {
 				install: createNamespace: true
 				values: installCRDs: true
 			}
+		}
+		"cert-manager-letsencrypt": {
+			enabled: units["cert-manager"].enabled
+			repo: "home"
+			kustomization_spec: {
+                                path: "./kustomize-units/cert-manager/letsencrypt"
+                                targetNamespace: "cert-manager-system"
+				postBuild:
+					substitute:
+						email: "to-be-defined"
+                        }
 		}
 	}
 }

@@ -1,0 +1,22 @@
+name: Test Module
+on:
+  push:
+    branch: ['*']
+
+permissions:
+  contents: read # needed for checkout
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Timoni
+        uses: stefanprodan/timoni/actions/setup@main
+      - name: Lint
+        run: |
+          timoni mod lint ./timoni
+      - name: Test instance build
+        run: |
+          timoni build -n testing test ./timoni
