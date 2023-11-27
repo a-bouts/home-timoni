@@ -78,5 +78,29 @@ values: {
 						email: "to-be-defined"
 			}
 		}
+		cilium: {
+			enabled: "no"
+			helm_repo_url: "https://helm.cilium.io/"
+			helmrelease_spec: {
+				chart: {
+					spec: {
+						chart: "cilium"
+						version: "v1.14.4"
+					}
+				}
+				targetNamespace: "kube-system"
+				values: {
+					kubeProxyReplacement: "strict"
+					ingressController: {
+						enabled: no
+						default: true
+						loadbalancerMode: shared
+						gatewayAPI: {
+							enabled: no
+						}
+					}
+				}
+			}
+		}
 	}
 }
