@@ -79,8 +79,8 @@ values: {
 			}
 		}
 		cilium: {
-			enabled: "no"
-			helm_repo_url: "https://helm.cilium.io/"
+			enabled: "yes"
+			helm_repo_url: "https://helm.cilium.io"
 			helmrelease_spec: {
 				chart: {
 					spec: {
@@ -100,6 +100,17 @@ values: {
 						}
 					}
 				}
+			}
+		}
+		metallb: {
+			enabled: "yes"
+			repo: "home"
+			kustomization_spec: {
+				path: "./kustomize-units/cert-manager/letsencrypt"
+				targetNamespace: "cert-manager-system"
+				postBuild:
+					substitute:
+						ADDRESS_POOL: "to-be-defined"
 			}
 		}
 	}
