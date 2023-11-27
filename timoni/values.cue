@@ -13,7 +13,6 @@ values: {
 			spec: {
 				url: "https://github.com/a-bouts/home-timoni"
 				ref: branch: "main"
-				interval: "5m"
 			}
 		}
 	}
@@ -69,15 +68,15 @@ values: {
 			}
 		}
 		"cert-manager-letsencrypt": {
-			enabled: units["cert-manager"].enabled
+			enabled: "{{ index .units \"cert-manager\" \"enabled\" }}"
 			repo: "home"
 			kustomization_spec: {
-                                path: "./kustomize-units/cert-manager/letsencrypt"
-                                targetNamespace: "cert-manager-system"
+				path: "./kustomize-units/cert-manager/letsencrypt"
+				targetNamespace: "cert-manager-system"
 				postBuild:
 					substitute:
 						email: "to-be-defined"
-                        }
+			}
 		}
 	}
 }
